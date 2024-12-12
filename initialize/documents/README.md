@@ -1,0 +1,1 @@
+# Docs to store should be placed in this folder

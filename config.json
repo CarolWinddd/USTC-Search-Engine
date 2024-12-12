@@ -1,0 +1,7 @@
+{
+    "table_name": "USTC",
+    "hbase_host": null,
+    "column_family": ["info", "data"],
+    "column_name": ["info:name", "info:college", "data:data"],
+    "output_dir": "./document_output"
+}
