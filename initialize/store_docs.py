@@ -10,7 +10,6 @@ from utils.docs import doc_to_bytes
 def store_docs():
     with open('config.json', 'r') as f:
         config = json.load(f)
-    print(config)
     
     table_name = config['table_name']
     host = config['hbase_host']
@@ -25,6 +24,7 @@ def store_docs():
     # "documents" folder is in the same directory as this script
     curdir = os.path.dirname(__file__)
     for college in os.listdir(curdir+'/documents'):
+        
         for filename in os.listdir(curdir+f'/documents/{college}'):
             # read file
             abspath = curdir+f'/documents/{college}/{filename}'

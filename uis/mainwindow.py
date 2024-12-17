@@ -53,7 +53,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.item_model.setHorizontalHeaderLabels(['Index', 'Document Name', 'College'])
         self.list_result.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         if result:
-            for i, (name, college, data) in enumerate(result):
+            for i, (key, name, college, data) in enumerate(result):
                 index_item = QtGui.QStandardItem(str(i+1))
                 name_item = QtGui.QStandardItem(name)
                 name_item.setForeground(QtGui.QColor('blue'))

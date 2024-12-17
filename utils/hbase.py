@@ -1,4 +1,6 @@
 import happybase
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 class HbaseConnection:
     def __init__(self, host):
@@ -12,18 +14,27 @@ class HbaseConnection:
         self.connection.close()
     
     # ambigous search
-    # TODO: I need to know what's the format of the query and search result
     def search_ambigous(self, table_name, columns, query, sort=True):
         table = self.get_table(table_name)
-        result = []
-        for key, data in table.scan(columns=columns):
-            if query in data.values():
-                result.append((key, data))
-        
+        documents = []
+        result = {}
+        for key, data in table.scan():
+            college = data[b'info:college'].decode('utf-8')
+            filename = data[b'info:filename'].decode('utf-8')
+            if query in college or query in filename:
+                documents.append(key)
+                result[key] = [filename, college, data[b'data:data']]
         if sort:
             # for each column, get an similarity score, using tf-idf with scikit-learn
-            # then weight the score with each column considered
             # finally sort the result by score
-            pass
-
+            tfidf = TfidfVectorizer()
+            all_docs = [query]+documents
+            tfidf_matrix = tfidf.fit_transform(all_docs)
+            similarity_matrix = cosine_similarity(tfidf_matrix)
+            
+            sort_result = {}
+            for i in range(1, len(similarity_matrix)):
+                sort_result[all_docs[i]] = similarity_matrix[0][i]
+            sort_result = dict(sorted(sort_result.items(), key=lambda x: x[1], reverse=True))
+            result = [(k, *result[k]) for k in sort_result.keys()]
         return result
