@@ -1,10 +1,13 @@
 import subprocess
-import os
+import json
 
-hadoop_dir = 'E:\\HBase\\hadoop\\sbin'
+with open('scripts_hbase/config_hbase.json', 'r') as f:
+    config = json.load(f)
+
+hadoop_dir = config['hadoop_dir']
 command_hadoop = 'start-all.cmd'
 
-hbase_dir = 'E:\\HBase\\hbase\\bin'
+hbase_dir = config['hbase_dir']
 command_hbase = 'start-hbase.cmd'
 
 command_thrift = 'hbase thrift start'

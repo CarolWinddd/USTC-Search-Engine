@@ -6,3 +6,8 @@ compileUI.py
 *.ui
 
 *.pdf
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc

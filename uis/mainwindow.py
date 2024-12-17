@@ -23,11 +23,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.list_result.setModel(self.item_model)
         self.list_result.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.list_result.resizeColumnsToContents()
-        
-        with open('history.json', 'r') as f:
-            self.last_search = json.load(f)['last_search']
-        if self.last_search:
-            self.input_search.setPlaceholderText(self.last_search)
             
         # buttons connection
         self.button_search.clicked.connect(self.button_search_clicked)

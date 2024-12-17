@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\usepackage[tc]{titlepic}
+\usepackage{titlesec}
+\usepackage{cite}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage[section]{placeins}
+
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{hypertex=true,
+	colorlinks=true,
+	linkcolor=blue,
+	anchorcolor=blue,
+	citecolor=blue}
+\usepackage{listings,xcolor}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[utf8]{inputenc}
+
+\usepackage{cleveref}
+\crefname{section}{\S}{\SS}
+\Crefname{section}{\S}{\SS}
+
+\geometry{a4paper,scale=0.8}
+\pagestyle{fancy}
+
+\usepackage{dirtree}
+\usepackage{caption}
+
+\lhead{\today}
+\chead{中国科学技术大学\\大数据系统及综合实验课程}
+
+\rhead{{\CTEXoptions[today=old]\today}}
+\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
+
+\titleformat*{\section}{\bfseries\Large}
+\titleformat*{\subsection}{\bfseries\large}
+\titleformat{\section}[block]{\Large\bfseries}{\S \thesection}{0em}{}
+
+\title{\bfseries 基于Hbase的USTC官方文件查询系统}
+\author{殷腾 \quad PB20030785\\
+	李新涛 \quad PB21151754}
+
+\begin{document}
+	\maketitle
+	%\clearpage
+	% \setcounter{secnumdepth}{1}
+%	\setcounter{section}{-1}
+%	\clearpage
+	\begin{abstract}
+		这里是摘要
+	\end{abstract}
+
+	\tableofcontents
+	\clearpage
+	
+	
+	\section{项目简介}
+	
+	\section{项目框架}
+	\subsection{界面}
+	
+	\subsection{检索}
+	
+	\section{细节实现}
+	\subsection{爬虫}
+	\textcolor{red}{TODO}：随便写写，爬了各种学院文件之类的
+	\subsection{建表}
+	\textcolor{red}{TODO}: 表的设计
+	\subsection{排序}
+	\textcolor{red}{TODO}: 排序依据
+	
+	\section{使用说明}
+	\subsection{依赖}
+	
+	\subsection{文件}
+	
+	\subsection{方法}
+	\textcolor{red}{TODO}: 以何种顺序分别运行哪些文件(参考附录文件结构)
+	
+	\section{效果展示}
+	\textcolor{red}{TODO}: 关键功能截图，用于展示
+	\section{成员分工}
+	\begin{itemize}
+		\item 殷腾PB20030785： 
+		\item 李新涛PB21151754：\textcolor{red}{TODO}
+	\end{itemize}
+	
+	\clearpage
+
+	\section*{附录}\addcontentsline{toc}{section}{附录}\label{附录}
+	\begin{center}
+		\begin{minipage}{0.5\textwidth}
+			\dirtree{%
+				.1 /.
+					.2 document\_output.
+					.2 initialization.
+						.3 documents.
+						.3 create\_table.py.
+						.3 store\_docs.py.
+						.3 initializa.py.
+					.2 report.
+						.3 report.pdf.
+						.3 report.tex.
+					.2 scripts\_hbase.
+						.3 config\_hbase.json.
+						.3 start\_hbase.py.
+						.3 stop\_hbase.py.
+					.2 uis.
+						.3 \_\_init\_\_.py.
+						.3 mainwindow.py.
+						.3 ui\_mainwindow.py.
+						.3 ui\_warningwindow.py.
+						.3 warningwindow.py.
+					.2 utils.
+						.3 \_\_init\_\_.py.
+						.3 docs.py.
+						.3 hbase.py.
+					.2 config.json.
+					.2 main.py.
+					.2 README.md.
+			}
+		\captionof{table}{项目文件结构}
+		\end{minipage}
+	\end{center}
+	
+\end{document}
