@@ -54,7 +54,12 @@
 %	\setcounter{section}{-1}
 %	\clearpage
 	\begin{abstract}
-		这里是摘要
+		本项目基于Hbase数据库，实现了一个USTC官方文件查询系统。
+		通过预先爬虫爬取USTC官方网站的文件，将文件存储在Hbase数据库中，并提供了一个简单的界面供用户查询。
+		用户可以通过关键词检索文件，系统将返回相关文件的信息。
+		系统支持对文件信息的排序，用户可以根据搜索词与文件关联性对文件进行排序。系统还支持对文件的下载，用户可以通过界面下载文件到本地进行查看。
+		系统的实现主要分为数据库与界面等部分。系统的实现过程中，我们使用了Python语言，Hbase数据库，PyQt5等工具。
+		最终系统的实现效果良好，用户可以通过界面方便地查询、下载USTC官方文件。
 	\end{abstract}
 
 	\tableofcontents
@@ -62,11 +67,21 @@
 	
 	
 	\section{项目简介}
-	
+	本项目基于Hbase数据库，实现了一个USTC官方文件查询系统。
+	通过按照一定格式爬取文件后，系统会将其存储在Hbase数据库中。
+	用户可以通过系统提供的图形化界面输入关键词，系统将返回相关文件的信息。
+	用户可以通过界面查看文件的信息，并下载文件到本地进行查看，避免了用户在USTC官方网站上进行繁琐的查找。
+
 	\section{项目框架}
 	\subsection{界面}
+	界面使用PyQt5实现，主要包括一个检索输入框和结果展示列表。当用户输入关键词后，系统会在Hbase数据库中检索相关文件，并将相关文件的各项信息结果展示在列表中。
+	同时列表中的结果支持直接下载，用户可以通过点击列表中的文件名下载文件到本地进行查看。
+	除此之外，若用户输入的关键词为空或者无相关文件，系统会给出提示信息。
 	
 	\subsection{检索}
+	检索功能主要通过Hbase数据库实现，使用Python第三方库happybase连接Hbase数据库。
+	系统会在Hbase数据库中检索相关文件，将检索到的文件信息返回给用户。
+	检索功能支持对文件信息的排序，用户可以根据搜索词与文件关联性对文件进行排序。
 	
 	\section{细节实现}
 	\subsection{爬虫}
@@ -78,8 +93,19 @@
 	
 	\section{使用说明}
 	\subsection{依赖}
+	项目开发环境为Python 3.8，需要安装happybase、PyQt5等第三方库。
+	此外若需要使用检索结果相关性排序功能，需要安装scikit-learn等库。
 	
 	\subsection{文件}
+	本部分介绍如何存储爬取的文件，以及从数据库下载到本地的文件，请参照附录\ref{附录}中的文件结构。
+		\begin{enumerate}
+			\item
+			爬取的文件需要按照学院分类存储，每个学院的文件存储在一个以学院名命名的文件夹中。
+			然后分别将这些文件夹存储在\texttt{initialization/documents}目录下。
+			\item
+			系统运行时检索并下载到本地的文件会存储在\texttt{document\_output}目录下。
+			用户可以自行决定是否保留这些文件。
+		\end{enumerate}
 	
 	\subsection{方法}
 	\textcolor{red}{TODO}: 以何种顺序分别运行哪些文件(参考附录文件结构)
@@ -88,13 +114,13 @@
 	\textcolor{red}{TODO}: 关键功能截图，用于展示
 	\section{成员分工}
 	\begin{itemize}
-		\item 殷腾PB20030785： 
+		\item 殷腾PB20030785：项目整体框架搭建，前端图形化界面设计。
 		\item 李新涛PB21151754：\textcolor{red}{TODO}
 	\end{itemize}
 	
 	\clearpage
 
-	\section*{附录}\addcontentsline{toc}{section}{附录}\label{附录}
+	\section*{附录}\addcontentsline{toc}{section}{附录}
 	\begin{center}
 		\begin{minipage}{0.5\textwidth}
 			\dirtree{%
@@ -127,6 +153,7 @@
 					.2 README.md.
 			}
 		\captionof{table}{项目文件结构}
+		\label{附录}
 		\end{minipage}
 	\end{center}
 	

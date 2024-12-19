@@ -1,6 +1,4 @@
 import happybase
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 class HbaseConnection:
     def __init__(self, host):
@@ -25,6 +23,8 @@ class HbaseConnection:
                 documents.append(key)
                 result[key] = [filename, college, data[b'data:data']]
         if sort:
+            from sklearn.feature_extraction.text import TfidfVectorizer
+            from sklearn.metrics.pairwise import cosine_similarity
             # for each column, get an similarity score, using tf-idf with scikit-learn
             # finally sort the result by score
             tfidf = TfidfVectorizer()

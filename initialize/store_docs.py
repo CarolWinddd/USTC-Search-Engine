@@ -24,6 +24,8 @@ def store_docs():
     # "documents" folder is in the same directory as this script
     curdir = os.path.dirname(__file__)
     for college in os.listdir(curdir+'/documents'):
+        if os.path.isfile(college):
+            continue
         for filename in os.listdir(curdir+f'/documents/{college}'):
             # read file
             abspath = curdir+f'/documents/{college}/{filename}'

@@ -56,7 +56,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 college_item = QtGui.QStandardItem(college)
                 self.item_model.appendRow([index_item, name_item, college_item])
         else:
-            pass
+            self.create_warning('No result found!')
             
     def open_result(self, index):
         item = self.item_model.item(index.row(), 1)
