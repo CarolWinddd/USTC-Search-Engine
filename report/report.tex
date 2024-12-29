@@ -85,15 +85,32 @@
 	
 	\section{细节实现}
 	\subsection{爬虫}
-	\textcolor{red}{TODO}：随便写写，爬了各种学院文件之类的
+	爬虫主要使用Python第三方库requests、BeautifulSoup实现，爬取USTC官方网站的文件。
+	本次实验中主要选取了人工智能与数据科学学院、计算机科学与技术学院、数学科学学院、网络空间安全学院、
+	信息科学技术学院、软件学院、财务处、出版社、学位与研究生教育、财务处这十个学院的官方文件进行爬取。
+	\\
+	\indent 由于一些网站本身的文件数量就很少，使用爬虫收益太低，所以我们选择手动下载这些学院的文件。此外，我们还尝试使用了IDM中的站点爬取功能，获取了未被列举在文档中心的doc、docx、xls、xlsx类型文件，总计894个文件。
+\newpage
 	\subsection{建表}
-	\textcolor{red}{TODO}: 表的设计
+	考虑到在使用校内文件搜索时，不同学院的学生会有不同的需求，即对于某一项规定，不同学院学生可能会有不同的要求。因此，在建表时，除了必要的文件名、数据这两项属性外，还增加了来源机构这一属性。而考虑到不同学院可能会存在同名的文件，选择(文件名\_来源机构)作为row\_key。
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.6\linewidth]{store}
+		\caption{存储文件}
+		\label{fig:store}
+	\end{figure}
 	\subsection{排序}
-	\textcolor{red}{TODO}: 排序依据
+	考虑到需要按照相似性进行排序，因此选择TfidfVectorizer进行文本特征提取以计算余弦相似度。主要使用habbybase的scan函数遍历表选择符合条件的文件，随后通过tfidf值计算余弦相似度来的到相似性排序。在这个过程中，主要耗时在于遍历和计算tfidf值。后续优化的思路，一是在遍历时使用多线程，二则是选择更高效的文本特征提取方法。
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.6\linewidth]{sort}
+		\caption{搜索}
+		\label{fig:sort}
+	\end{figure}
 	
 	\section{使用说明}
 	\subsection{依赖}
-	项目开发环境为Python 3.8，需要安装happybase、PyQt5等第三方库。
+	项目开发环境为Python 3.9，需要安装happybase、PyQt5等第三方库。
 	此外若需要使用检索结果相关性排序功能，需要安装scikit-learn等库。
 	
 	\subsection{文件}
@@ -108,23 +125,40 @@
 		\end{enumerate}
 	
 	\subsection{方法}
-	\textcolor{red}{TODO}: 以何种顺序分别运行哪些文件(参考附录文件结构)
+	完成环境安装后，先运行start\_hbase.py以启动软件，在将导入文件按要求放置完毕后允许initialize.py文件完成建表和数据导入，最后运行main.py文件,在显示的搜索界面进行搜索。使用完毕后，运行stop\_hbase.py文件以终止运行。
+	
 	
 	\section{效果展示}
-	\textcolor{red}{TODO}: 关键功能截图，用于展示
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\linewidth]{screenshot001}
+		\includegraphics[width=0.4\linewidth]{screenshot002}
+		\caption{搜索效果演示}
+		\label{fig:screenshot001}
+	\end{figure}
+	
 	\section{成员分工}
 	\begin{itemize}
 		\item 殷腾PB20030785：项目整体框架搭建，前端图形化界面设计。
-		\item 李新涛PB21151754：\textcolor{red}{TODO}
+		\item 李新涛PB21151754：文件爬取与环境准备、数据库表设计及排序搜索。
 	\end{itemize}
 	
-	\clearpage
 
 	\section*{附录}\addcontentsline{toc}{section}{附录}
 	\begin{center}
 		\begin{minipage}{0.5\textwidth}
 			\dirtree{%
 				.1 /.
+					.2 crawl.
+						.3 \_init\_.
+						.3 crawler.py.
+						.3 grad.py.
+						.3 mathematics.py.
+						.3 press.py.
+						.3 scs.py.
+						.3 sist.py.
+						.3 sse.py.
+						.3 teach.py.
 					.2 document\_output.
 					.2 initialization.
 						.3 documents.
@@ -149,6 +183,7 @@
 						.3 docs.py.
 						.3 hbase.py.
 					.2 config.json.
+					.2 crawl\_data.
 					.2 main.py.
 					.2 README.md.
 			}
